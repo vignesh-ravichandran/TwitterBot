@@ -17,24 +17,31 @@ const stream = Twitter.stream('statuses/filter', {track: '#leetcode'});
 
 // event handler on the stream 
 stream.on('tweet', tweet => {
-   // retweet the tweets
-  Twitter.post('statuses/retweet/:id', {id: tweet.id_str}, (err,data,response)=>{
-    if(err){
-        console.log(err);
-    }else{
-        console.log('Retweeted')
-    }
- 
-  });
+  
+   try {
 
-  // like the tweets
-  Twitter.post('favorites/create', {id: tweet.id_str}, (err,data,response)=>{
-    if(err){
-        console.log(err);
-    }else{
-        console.log('Liked the tweet');
-    }
- 
-  }); 
-
+     // retweet the tweets
+    Twitter.post('statuses/retweet/:id', {id: tweet.id_str}, (err,data,response)=>{
+        if(err){
+            console.log(err);
+        }else{
+            console.log('Retweeted')
+        }
+     
+      });
+    
+      // like the tweets
+      Twitter.post('favorites/create', {id: tweet.id_str}, (err,data,response)=>{
+        if(err){
+            console.log(err);
+        }else{
+            console.log('Liked the tweet');
+        }
+     
+      }); 
+    
+   } catch (error) {
+       console.log(error);
+   }
+  
 });
